@@ -7,7 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08987ca3-a802-44a4-bb9d-310df6ed44d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/temple/helloworld/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/temple/helloworld/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment1/.idea/.gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +42,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_2_API_30" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-09-09T21:00:57.442Z" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="memory.settings.postsync.last.time.stamp" value="1599683408998" />
@@ -120,9 +126,41 @@
       <screen x="0" y="23" width="1536" height="937" />
     </state>
     <state x="387" y="96" key="CommitChangelistDialog2/0.23.1536.937@0.23.1536.937" timestamp="1599683705133" />
-    <state x="438" y="324" key="com.intellij.ide.util.TipDialog" timestamp="1599683429306">
+    <state width="679" height="293" key="GridCell.Tab.0.bottom" timestamp="1599685728527">
       <screen x="0" y="23" width="1536" height="937" />
     </state>
-    <state x="438" y="324" key="com.intellij.ide.util.TipDialog/0.23.1536.937@0.23.1536.937" timestamp="1599683429306" />
+    <state width="679" height="293" key="GridCell.Tab.0.bottom/0.23.1536.937@0.23.1536.937" timestamp="1599685728527" />
+    <state width="679" height="293" key="GridCell.Tab.0.center" timestamp="1599685728527">
+      <screen x="0" y="23" width="1536" height="937" />
+    </state>
+    <state width="679" height="293" key="GridCell.Tab.0.center/0.23.1536.937@0.23.1536.937" timestamp="1599685728527" />
+    <state width="679" height="293" key="GridCell.Tab.0.left" timestamp="1599685728526">
+      <screen x="0" y="23" width="1536" height="937" />
+    </state>
+    <state width="679" height="293" key="GridCell.Tab.0.left/0.23.1536.937@0.23.1536.937" timestamp="1599685728526" />
+    <state width="679" height="293" key="GridCell.Tab.0.right" timestamp="1599685728527">
+      <screen x="0" y="23" width="1536" height="937" />
+    </state>
+    <state width="679" height="293" key="GridCell.Tab.0.right/0.23.1536.937@0.23.1536.937" timestamp="1599685728527" />
+    <state width="679" height="293" key="GridCell.Tab.1.bottom" timestamp="1599685728527">
+      <screen x="0" y="23" width="1536" height="937" />
+    </state>
+    <state width="679" height="293" key="GridCell.Tab.1.bottom/0.23.1536.937@0.23.1536.937" timestamp="1599685728527" />
+    <state width="679" height="293" key="GridCell.Tab.1.center" timestamp="1599685728527">
+      <screen x="0" y="23" width="1536" height="937" />
+    </state>
+    <state width="679" height="293" key="GridCell.Tab.1.center/0.23.1536.937@0.23.1536.937" timestamp="1599685728527" />
+    <state width="679" height="293" key="GridCell.Tab.1.left" timestamp="1599685728527">
+      <screen x="0" y="23" width="1536" height="937" />
+    </state>
+    <state width="679" height="293" key="GridCell.Tab.1.left/0.23.1536.937@0.23.1536.937" timestamp="1599685728527" />
+    <state width="679" height="293" key="GridCell.Tab.1.right" timestamp="1599685728527">
+      <screen x="0" y="23" width="1536" height="937" />
+    </state>
+    <state width="679" height="293" key="GridCell.Tab.1.right/0.23.1536.937@0.23.1536.937" timestamp="1599685728527" />
+    <state x="438" y="324" key="com.intellij.ide.util.TipDialog" timestamp="1599685252025">
+      <screen x="0" y="23" width="1536" height="937" />
+    </state>
+    <state x="438" y="324" key="com.intellij.ide.util.TipDialog/0.23.1536.937@0.23.1536.937" timestamp="1599685252025" />
   </component>
 </project>
