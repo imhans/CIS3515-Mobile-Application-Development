@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ColorAdapter extends BaseAdapter {
+public class ColorAdapter<String> extends BaseAdapter {
     Context context;
     ArrayList<String> colors;
 
