@@ -46,14 +46,19 @@ public class ColorAdapter<String> extends BaseAdapter {
         colors[8] = Color.YELLOW;
         colors[9] = Color.RED;
 
-        //Create a View
-        TextView textView = new TextView(context);
-        //Set things for the View
-        textView.setPadding(20, 10, 0, 10);
-        textView.setTextSize(20);
-        textView.setText(getItem(position).toString());
-        textView.setBackgroundColor(colors[position]); //Setting BG colors
-        textView.setTextColor(Color.BLACK);
+        TextView textView;
+        if (convertView == null) {
+            //Create a View
+            textView = new TextView(context);
+            //Set things for the View
+            textView.setPadding(20, 10, 0, 10);
+            textView.setTextSize(20);
+            textView.setText(getItem(position).toString());
+            textView.setBackgroundColor(colors[position]); //Setting BG colors
+            textView.setTextColor(Color.BLACK);
+        } else {
+            textView = (TextView) convertView;
+        }
 
         //Return the View
         return textView;

@@ -10,6 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -38,28 +41,36 @@ public class ColorActivity extends AppCompatActivity {
         colors.add("Red");
 
         final View bgView = findViewById(R.id.bgView);
-        //bgView.setBackgroundColor(Color.BLUE);
-
         spinnerView = findViewById(R.id.spinner);
+
+        //Create and Set the custom adapter, ColorAdapter, to the spinner
         ColorAdapter<String> adapter = new ColorAdapter<String>(this, colors);
         spinnerView.setAdapter(adapter);
 
         spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView selectedView = (TextView) parent.getSelectedView();
                 Object selectedObj = parent.getItemAtPosition(position);
 
                 switch (selectedObj.toString()) {
+                    case "White" : bgView.setBackgroundColor(Color.WHITE); break;
+                    case "Magenta" : bgView.setBackgroundColor(Color.MAGENTA); break;
+                    case "Blue" : bgView.setBackgroundColor(Color.BLUE); break;
+                    case "Cyan" : bgView.setBackgroundColor(Color.CYAN); break;
+                    case "Dark gray" : bgView.setBackgroundColor(Color.DKGRAY); break;
+                    case "Light gray" : bgView.setBackgroundColor(Color.LTGRAY); break;
+                    case "Gray" : bgView.setBackgroundColor(Color.GRAY); break;
+                    case "Green" : bgView.setBackgroundColor(Color.GREEN); break;
                     case "Yellow" : bgView.setBackgroundColor(Color.YELLOW); break;
                     case "Red" : bgView.setBackgroundColor(Color.RED); break;
-                    //    spinnerView.setBackgroundColor(Color.WHITE);
                 }
-                spinnerView.setBackgroundColor(Color.WHITE);
-            }
+                selectedView.setBackgroundColor(Color.WHITE);
 
+            }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                bgView.setBackgroundColor(Color.BLUE);
+
             }
         });
 

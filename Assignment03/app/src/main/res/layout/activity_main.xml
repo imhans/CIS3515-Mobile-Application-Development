@@ -20,7 +20,7 @@
         android:layout_width="218dp"
         android:layout_height="35dp"
         android:layout_marginTop="120dp"
-        android:dropDownWidth="match_parent"
+        android:dropDownWidth="wrap_content"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
