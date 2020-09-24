@@ -1,6 +1,7 @@
 package edu.temple.assignment03;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -33,11 +34,26 @@ public class ColorAdapter<String> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        int colors[] = new int[10];
+        colors[0] = Color.WHITE;
+        colors[1] = Color.MAGENTA;
+        colors[2] = Color.BLUE;
+        colors[3] = Color.CYAN;
+        colors[4] = Color.DKGRAY;
+        colors[5] = Color.LTGRAY;
+        colors[6] = Color.GRAY;
+        colors[7] = Color.GREEN;
+        colors[8] = Color.YELLOW;
+        colors[9] = Color.RED;
+
         //Create a View
         TextView textView = new TextView(context);
         //Set things for the View
-        textView.setPadding(8, 8, 8, 8);
+        textView.setPadding(20, 10, 0, 10);
+        textView.setTextSize(20);
         textView.setText(getItem(position).toString());
+        textView.setBackgroundColor(colors[position]); //Setting BG colors
+        textView.setTextColor(Color.BLACK);
 
         //Return the View
         return textView;

@@ -6,14 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".ColorActivity">
 
+    <View
+        android:id="@+id/bgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="218dp"
-        android:layout_height="23dp"
+        android:layout_height="35dp"
         android:layout_marginTop="120dp"
+        android:dropDownWidth="match_parent"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
