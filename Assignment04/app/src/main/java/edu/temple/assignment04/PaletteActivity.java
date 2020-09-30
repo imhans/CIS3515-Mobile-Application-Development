@@ -3,6 +3,7 @@ package edu.temple.assignment04;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,11 +47,12 @@ public class PaletteActivity extends AppCompatActivity {
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),"dd", Toast.LENGTH_LONG);
+                //Toast.makeText(getApplicationContext(),"dd", Toast.LENGTH_LONG);
                 Intent intent = new Intent(getApplicationContext(), CanvasActivity.class);
                 intent.putExtra("colorString", colors.get(position).toString());
-                //String username = editText.getText().toString();
-                //String greeting = "Welcome, " + username + ",\n to the SignUpForm App";
+                View selectedView = view;
+                ColorDrawable viewColor = (ColorDrawable) view.getBackground();
+                intent.putExtra("colorInt",viewColor.getColor());
                 startActivity(intent);
             }
         });
