@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Assignment04</string>
+    <string name="app_name">Color Changing App</string>
+    <string name="app_title1">Palette Activity</string>
+    <string name="app_title2">Canvas Activity</string>
 </resources>

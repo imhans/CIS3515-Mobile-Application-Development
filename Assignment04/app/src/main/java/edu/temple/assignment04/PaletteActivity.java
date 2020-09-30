@@ -25,6 +25,7 @@ public class PaletteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.setTitle(getResources().getString(R.string.app_title1));
 
         //Create ArrayList to store colors
         colors = new ArrayList<String>();

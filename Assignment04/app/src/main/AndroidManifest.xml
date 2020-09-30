@@ -3,14 +3,14 @@
     package="edu.temple.assignment04">
 
     <application
+        android:label="@string/app_name"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_download"
-        android:label="Color Changing App"
         android:roundIcon="@mipmap/ic_launcher_download_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PaletteActivity"
-            android:label="Palette Activity">
+
+        <activity android:name=".PaletteActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CanvasActivity"
-            android:label="Canvas Activity"></activity>
+            android:label="@string/app_title2"></activity>
     </application>
 
 </manifest>
