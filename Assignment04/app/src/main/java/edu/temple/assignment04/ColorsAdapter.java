@@ -36,6 +36,17 @@ public class ColorsAdapter<String> extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        int colors[] = new int[9];
+        colors[0] = Color.WHITE;
+        colors[1] = Color.MAGENTA;
+        colors[2] = Color.BLUE;
+        colors[3] = Color.CYAN;
+        colors[4] = Color.DKGRAY;
+        colors[5] = Color.LTGRAY;
+        colors[6] = Color.GREEN;
+        colors[7] = Color.YELLOW;
+        colors[8] = Color.RED;
+
         TextView textView;
         if (convertView == null) {
             //Create a View
@@ -46,6 +57,8 @@ public class ColorsAdapter<String> extends BaseAdapter {
             textView.setAllCaps(true);
             textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             textView.setText(getItem(position).toString());
+            textView.setBackgroundColor(colors[position]);
+            textView.setTextColor(Color.BLACK);
         } else {
             textView = (TextView) convertView;
         }
