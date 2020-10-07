@@ -3,6 +3,7 @@ package edu.temple.assignment04;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,9 @@ public class PaletteActivity extends AppCompatActivity {
 
         //Create ArrayList to store colors
         colors = new ArrayList<String>();
+        Resources res = getResources();
+        //String[] colors = res.getStringArray(R.array.colors);
+
         //Add colors
         colors.add("White");
         colors.add("Magenta");
