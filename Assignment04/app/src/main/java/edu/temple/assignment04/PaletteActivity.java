@@ -31,18 +31,18 @@ public class PaletteActivity extends AppCompatActivity {
         //Create ArrayList to store colors
         colors = new ArrayList<String>();
         Resources res = getResources();
-        //String[] colors = res.getStringArray(R.array.colors);
+        String[] colors_array = res.getStringArray(R.array.colors);
 
         //Add colors
-        colors.add("White");
-        colors.add("Magenta");
-        colors.add("Blue");
-        colors.add("Cyan");
-        colors.add("Dark gray");
-        colors.add("Light gray");
-        colors.add("Green");
-        colors.add("Yellow");
-        colors.add("Red");
+        colors.add(colors_array[0]);
+        colors.add(colors_array[1]);
+        colors.add(colors_array[2]);
+        colors.add(colors_array[3]);
+        colors.add(colors_array[4]);
+        colors.add(colors_array[5]);
+        colors.add(colors_array[6]);
+        colors.add(colors_array[7]);
+        colors.add(colors_array[8]);
 
         gv = findViewById(R.id.gvColors);
         //Create and Set the custom adapter, ColorsAdapter, to the GridView
