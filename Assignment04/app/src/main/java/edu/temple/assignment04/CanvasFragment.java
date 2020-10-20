@@ -1,5 +1,6 @@
 package edu.temple.assignment04;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,11 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CanvasFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CanvasFragment extends Fragment {
     View bg_color;
     TextView txt_color;
@@ -43,6 +39,7 @@ public class CanvasFragment extends Fragment {
         View l = inflater.inflate(R.layout.fragment_canvas, container, false);
         bg_color = l.findViewById(R.id.bgColor);
         txt_color = l.findViewById(R.id.txtColor);
+        txt_color.setTextColor(Color.BLACK);
         return l;
     }
 

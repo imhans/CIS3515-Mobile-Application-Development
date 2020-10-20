@@ -22,21 +22,18 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements PaletteFragment.ColorSelectedInterface {
 
-//    GridView gv;
-//    ArrayList<String> colors;
     CanvasFragment canvasFragment;
     PaletteFragment paletteFragment;
-    int[] colors_int = {Color.WHITE, Color.MAGENTA, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.LTGRAY, Color.GREEN, Color.YELLOW, Color.RED};
-    String[] colors_str = {"White", "Magenta", "Blue", "Cyan", "Dark Gray", "Light Gray", "Green", "Yellow", "Red"};
-            //getResources().getStringArray(R.array.colors);
-
+    int[] colors_int;
+    String[] colors_str;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.setTitle(getResources().getString(R.string.app_title1));
-
+        colors_str = getResources().getStringArray(R.array.colors);
+        colors_int = new int[] {Color.WHITE, Color.MAGENTA, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.LTGRAY, Color.GREEN, Color.YELLOW, Color.RED};
 //        //Create ArrayList to store colors
 //        colors = new ArrayList<String>();
 //        Resources res = getResources();

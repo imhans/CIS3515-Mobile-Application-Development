@@ -9,6 +9,7 @@
         android:id="@+id/gvColors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:numColumns="3" />
+        android:numColumns="3"
+        android:layout_margin="30dp"
+        android:textAlignment="center"/>
 </FrameLayout>
