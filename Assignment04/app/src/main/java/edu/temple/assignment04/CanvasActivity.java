@@ -32,7 +32,7 @@ public class CanvasActivity extends AppCompatActivity {
         textView.setTextColor(Color.BLACK);
 
         // Capture the background color code and set the background color of the activity
-        bgView = findViewById(R.id.bgView);
+        bgView = findViewById(R.id.bgColor);
         bgView.setBackgroundColor(colorInt);
     }
 }

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PaletteFragment.ColorSelectedInterface {
 
     GridView gv;
     ArrayList<String> colors;
@@ -68,8 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container_1, paletteFragment)
-                .add(R.id.container_2, canvasFragment).commit();
+                .add(R.id.container_1, paletteFragment.newInstance(getResources().getStringArray(R.array.colors)))
+                .add(R.id.container_2, canvasFragment)
+                .commit();
 
+    }
+
+    @Override
+    public void colorSelected(int index) {
+        
     }
 }
