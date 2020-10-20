@@ -17,8 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CanvasActivity"
-            android:label="@string/app_title2"></activity>
+
     </application>
 
 </manifest>

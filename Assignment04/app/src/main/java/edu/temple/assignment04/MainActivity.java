@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -21,8 +22,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements PaletteFragment.ColorSelectedInterface {
 
-    GridView gv;
-    ArrayList<String> colors;
+//    GridView gv;
+//    ArrayList<String> colors;
+    CanvasFragment canvasFragment;
+    PaletteFragment paletteFragment;
+    int[] colors_int = {Color.WHITE, Color.MAGENTA, Color.BLUE, Color.CYAN, Color.DKGRAY, Color.LTGRAY, Color.GREEN, Color.YELLOW, Color.RED};
+    String[] colors_str = {"White", "Magenta", "Blue", "Cyan", "Dark Gray", "Light Gray", "Green", "Yellow", "Red"};
+            //getResources().getStringArray(R.array.colors);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements PaletteFragment.C
 //                startActivity(intent);
 //            }
 //        });
-        PaletteFragment paletteFragment = new PaletteFragment();
-        CanvasFragment canvasFragment = new CanvasFragment();
+        paletteFragment = new PaletteFragment();
+        canvasFragment = new CanvasFragment();
 
         getSupportFragmentManager()
                 .beginTransaction()
@@ -76,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements PaletteFragment.C
 
     @Override
     public void colorSelected(int index) {
-        
+        canvasFragment.changeColor(colors_int[index]);
+        canvasFragment.changeText(colors_str[index]);
     }
 }
