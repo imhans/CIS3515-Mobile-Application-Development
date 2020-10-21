@@ -42,7 +42,7 @@ public class PaletteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if ( getArguments() != null ) {
             colors = getArguments().getStringArray(COLOR_KEYS);
         }
     }
@@ -50,7 +50,7 @@ public class PaletteFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if( context instanceof ColorSelectedInterface )
+        if ( context instanceof ColorSelectedInterface )
             parentActivity = (ColorSelectedInterface) context;
         else
             throw new RuntimeException("Please implement ColorSelectedInterface to attach this fragment");
