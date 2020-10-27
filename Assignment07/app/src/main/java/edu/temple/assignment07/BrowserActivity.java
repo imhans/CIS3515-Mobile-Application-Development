@@ -27,6 +27,6 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
 
     @Override
     public void searchClicked(String url) {
-        pvf.changeText(url);
+        pvf.loadWeb(url);
     }
 }

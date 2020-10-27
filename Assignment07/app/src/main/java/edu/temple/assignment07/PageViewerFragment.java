@@ -7,12 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class PageViewerFragment extends Fragment {
 
     View l;
-    TextView test;
+    WebView webView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,12 +34,12 @@ public class PageViewerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         l = inflater.inflate(R.layout.fragment_page_viewer, container, false);
-        test = l.findViewById(R.id.tvTest);
-
+        webView = l.findViewById(R.id.webView);
+        webView.setWebViewClient(new WebViewClient());
         return l;
     }
 
-    public void changeText(String text) {
-        test.setText(text);
+    public void loadWeb(String url) {
+        webView.loadUrl("https://"+url);
     }
 }
