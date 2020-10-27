@@ -13,6 +13,8 @@ public class BrowserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.setTitle(getResources().getString(R.string.title));
+
 
         pcf = new PageControlFragment();
         pvf = new PageViewerFragment();

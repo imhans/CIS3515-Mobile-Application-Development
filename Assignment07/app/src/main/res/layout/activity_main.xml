@@ -10,8 +10,9 @@
     <FrameLayout
         android:id="@+id/page_control"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="60dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,14 +23,14 @@
     <FrameLayout
         android:id="@+id/page_viewer"
         android:layout_width="match_parent"
-        android:layout_height="850dp"
+        android:layout_height="620dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/page_control">
 
     </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
