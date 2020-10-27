@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class BrowserActivity extends AppCompatActivity {
+public class BrowserActivity extends AppCompatActivity implements PageControlFragment.SearchClickedInterface {
 
     PageControlFragment pcf;
     PageViewerFragment pvf;
@@ -23,5 +23,10 @@ public class BrowserActivity extends AppCompatActivity {
                 .add(R.id.page_control, pcf)
                 .add(R.id.page_viewer, pvf)
                 .commit();
+    }
+
+    @Override
+    public void searchClicked(String url) {
+        pvf.changeText(url);
     }
 }

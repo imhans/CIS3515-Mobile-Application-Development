@@ -14,7 +14,8 @@
             android:id="@+id/tvURL"
             android:layout_width="236dp"
             android:layout_height="wrap_content"
-            android:textSize="30sp"></EditText>
+            android:textSize="30sp"
+            android:hint="@string/placeholder"></EditText>
 
         <ImageButton
             android:id="@+id/btnSearch"
