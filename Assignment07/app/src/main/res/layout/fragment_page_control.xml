@@ -13,8 +13,8 @@
         <EditText
             android:id="@+id/tvURL"
             android:layout_width="236dp"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:layout_height="60sp"
+            android:textSize="20sp"
             android:hint="@string/placeholder"></EditText>
 
         <ImageButton

@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class BrowserActivity extends AppCompatActivity implements PageControlFragment.SearchClickedInterface {
+public class BrowserActivity extends AppCompatActivity
+        implements PageControlFragment.SearchClickedInterface,
+        PageViewerFragment.ViewerInterface {
 
     PageControlFragment pcf;
     PageViewerFragment pvf;
@@ -22,11 +24,27 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.page_control, pcf)
                 .add(R.id.page_viewer, pvf)
+                .addToBackStack(null)
                 .commit();
     }
 
     @Override
     public void searchClicked(String url) {
         pvf.loadWeb(url);
+    }
+
+    @Override
+    public void goPrevious() {
+        pvf.webView.goBack();
+    }
+
+    @Override
+    public void goNext() {
+        pvf.webView.goForward();
+    }
+
+    @Override
+    public void fetchURL(String url) {
+        pcf.urlText.setText(url);
     }
 }

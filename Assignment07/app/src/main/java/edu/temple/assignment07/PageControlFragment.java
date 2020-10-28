@@ -22,14 +22,6 @@ public class PageControlFragment extends Fragment {
     ImageButton previous;
     SearchClickedInterface parentActivity;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public PageControlFragment() {
         // Required empty public constructor
@@ -53,6 +45,13 @@ public class PageControlFragment extends Fragment {
         l = inflater.inflate(R.layout.fragment_page_control, container, false);
         urlText = l.findViewById(R.id.tvURL);
         search = l.findViewById(R.id.btnSearch);
+        previous = l.findViewById(R.id.btnPrevious);
+        next = l.findViewById(R.id.btnNext);
+
+        //String fetchedURL = parentActivity.refreshURL();
+        //urlText.setText();
+
+        //Search button
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,9 +64,29 @@ public class PageControlFragment extends Fragment {
                 }
             }
         });
+
+        //Previous button
+        previous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentActivity.goPrevious();
+            }
+        });
+
+        //Next button
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parentActivity.goNext();
+            }
+        });
+
         return l;
     }
     interface SearchClickedInterface {
         void searchClicked(String url);
+        void goPrevious();
+        void goNext();
     }
+
 }
