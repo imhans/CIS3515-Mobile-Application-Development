@@ -10,9 +10,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class PageControlFragment extends Fragment {
     View l;
@@ -39,6 +45,12 @@ public class PageControlFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("url", urlText.getText().toString());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -48,18 +60,25 @@ public class PageControlFragment extends Fragment {
         previous = l.findViewById(R.id.btnPrevious);
         next = l.findViewById(R.id.btnNext);
 
-        //String fetchedURL = parentActivity.refreshURL();
-        //urlText.setText();
+        //Restore the EditText
+        if ( savedInstanceState != null )
+            urlText.setText(savedInstanceState.getString("url"));
 
         //Search button
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //URL Validation
+                if (!android.webkit.URLUtil.isValidUrl(urlText.getText().toString())
+                || android.webkit.URLUtil.isHttpUrl(urlText.getText().toString())) {
+                    String urlString = urlText.getText().toString();
+                    urlString = urlString.substring(urlString.lastIndexOf('/')+1);
+                    urlText.setText(urlString);
+                }
                 if (!urlText.getText().toString().matches("")) {
                     parentActivity.searchClicked(urlText.getText().toString());
                 }
                 else {
-                    //parentActivity.searchClicked("Empty string");
                     Toast.makeText(getContext(), "You must type in a url", Toast.LENGTH_SHORT).show();
                 }
             }

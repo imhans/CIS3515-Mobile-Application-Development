@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import java.net.MalformedURLException;
+
 public class BrowserActivity extends AppCompatActivity
         implements PageControlFragment.SearchClickedInterface,
         PageViewerFragment.ViewerInterface {
@@ -17,15 +19,20 @@ public class BrowserActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         this.setTitle(getResources().getString(R.string.title));
 
-
         pcf = new PageControlFragment();
         pvf = new PageViewerFragment();
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.page_control, pcf)
-                .add(R.id.page_viewer, pvf)
-                .addToBackStack(null)
-                .commit();
+        if (getSupportFragmentManager().findFragmentById(R.id.page_control) == null
+        && getSupportFragmentManager().findFragmentById(R.id.page_viewer ) == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.page_control, pcf)
+                    .add(R.id.page_viewer, pvf)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+
+        }
+
     }
 
     @Override
