@@ -1,5 +1,6 @@
 package edu.temple.assignment07;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -14,23 +15,31 @@ public class BrowserActivity extends AppCompatActivity
     PageViewerFragment pvf;
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getSupportFragmentManager().putFragment(outState, "pcf", pcf);
+        getSupportFragmentManager().putFragment(outState, "pvf", pvf);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.setTitle(getResources().getString(R.string.title));
 
-        pcf = new PageControlFragment();
-        pvf = new PageViewerFragment();
 
         if (getSupportFragmentManager().findFragmentById(R.id.page_control) == null
         && getSupportFragmentManager().findFragmentById(R.id.page_viewer ) == null) {
+            pcf = new PageControlFragment();
+            pvf = new PageViewerFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.page_control, pcf)
                     .add(R.id.page_viewer, pvf)
                     .addToBackStack(null)
                     .commit();
         } else {
-
+            pcf = (PageControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pcf");
+            pvf = (PageViewerFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pvf");
         }
 
     }
