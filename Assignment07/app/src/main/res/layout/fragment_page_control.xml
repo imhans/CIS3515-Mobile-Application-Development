@@ -8,34 +8,37 @@
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
 
         <EditText
             android:id="@+id/tvURL"
             android:layout_width="236dp"
             android:layout_height="60sp"
-            android:textSize="20sp"
-            android:hint="@string/placeholder"></EditText>
+            android:layout_weight="70"
+            android:gravity="center_vertical"
+            android:hint="@string/placeholder"
+            android:textSize="20sp"></EditText>
 
         <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="10"
             android:src="?android:attr/actionModeWebSearchDrawable" />
 
         <ImageButton
             android:id="@+id/btnPrevious"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="10"
             android:src="@android:drawable/ic_media_previous" />
 
         <ImageButton
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="10"
             android:src="@android:drawable/ic_media_next" />
 
     </LinearLayout>
