@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class PageViewerFragment extends Fragment {
     View l;
     WebView webView;
     ViewerInterface parentActivity;
+    private String pageTitle;
 
     public PageViewerFragment() {
         // Required empty public constructor
@@ -65,6 +67,13 @@ public class PageViewerFragment extends Fragment {
                 parentActivity.fetchURL(url);
             }
 
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                //Fetch the title name of the current page and Set the action bar title
+                pageTitle = webView.getTitle();
+                parentActivity.fetchTitle(pageTitle);
+            }
         });
 
         return l;
@@ -75,9 +84,11 @@ public class PageViewerFragment extends Fragment {
             webView.loadUrl("https://" + url);
         else
             webView.loadUrl(url);
+
     }
 
     interface ViewerInterface {
         void fetchURL(String url);
+        void fetchTitle(String title);
     }
 }

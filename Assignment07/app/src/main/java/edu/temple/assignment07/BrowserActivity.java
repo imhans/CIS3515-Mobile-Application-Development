@@ -63,4 +63,9 @@ public class BrowserActivity extends AppCompatActivity
     public void fetchURL(String url) {
         pcf.urlText.setText(url);
     }
+
+    @Override
+    public void fetchTitle(String title) {
+        this.setTitle(title);
+    }
 }
