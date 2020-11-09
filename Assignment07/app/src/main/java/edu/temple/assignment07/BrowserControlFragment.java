@@ -1,12 +1,16 @@
 package edu.temple.assignment07;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +18,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class BrowserControlFragment extends Fragment {
+
+    View l;
+    ImageButton btnNewPage;
+    ImageBtnClicked parentActivity;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,6 +55,17 @@ public class BrowserControlFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof BrowserControlFragment.ImageBtnClicked) {
+            parentActivity = (BrowserControlFragment.ImageBtnClicked) context;
+        }
+        else {
+            throw new RuntimeException("Please implement ImageBtnClicked to attach this fragment");
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -59,6 +78,21 @@ public class BrowserControlFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_browser_control, container, false);
+        l = inflater.inflate(R.layout.fragment_browser_control, container, false);
+        btnNewPage = l.findViewById(R.id.btnNewPage);
+
+        btnNewPage.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                parentActivity.addPage();
+                Log.d("test", "button is successfully clicked");
+            }
+        });
+
+        return l;
+    }
+    interface ImageBtnClicked {
+        void addPage();
     }
 }
