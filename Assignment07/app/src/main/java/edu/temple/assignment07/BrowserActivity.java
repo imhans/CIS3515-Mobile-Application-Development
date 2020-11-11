@@ -4,13 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 public class BrowserActivity extends AppCompatActivity
         implements PageControlFragment.SearchClickedInterface,
         PageViewerFragment.ViewerInterface,
-        BrowserControlFragment.ImageBtnClicked {
+        BrowserControlFragment.ImageBtnClicked,
+        PagerFragment.PagerInterface,
+        PageListFragment.PageListInterface {
 
     PageControlFragment pcf;
     PageViewerFragment pvf;
@@ -99,7 +103,20 @@ public class BrowserActivity extends AppCompatActivity
     @Override
     public void addPage() {
         //Add a new instance of PVF into the arrayList
-        plf.updateList(new PageViewerFragment());
+        //plf.updateList(new PageViewerFragment());
         pf.updatePVFs();
+        plf.updateList();
+        //Log.d("count",Integer.toString(pf.mPager.getAdapter().getCount()));
+    }
+
+    @Override
+    public void passPVFs(ArrayList<PageViewerFragment> pvfs) {
+        plf.pageList = pvfs;
+        //plf.updateList(); 왜 여기선 눌포인트뜸? 위에서는 되고 시발?
+    }
+
+    @Override
+    public void displayPVF(int position) {
+        pf.mPager.setCurrentItem(position);
     }
 }

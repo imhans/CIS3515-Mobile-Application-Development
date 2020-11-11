@@ -35,6 +35,7 @@ public class PageListFragment extends Fragment {
     ListView listView;
     ListViewAdapter mAdapter;
     ArrayList<PageViewerFragment> pageList;
+    PageListInterface parentActivity;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,10 +57,21 @@ public class PageListFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof PageListFragment.PageListInterface) {
+            parentActivity = (PageListFragment.PageListInterface) context;
+        }
+        else {
+            throw new RuntimeException("Please implement PageListInterface to attach this fragment");
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            //pageList = (ArrayList<PageViewerFragment>) getArguments().getSerializable(ARRAYLIST_PVF);
+        if (getArguments() != null && getArguments().containsKey("ARRAYLIST_PVF")) {
+            pageList = (ArrayList<PageViewerFragment>) getArguments().getSerializable(ARRAYLIST_PVF);
         }
     }
 
@@ -71,32 +83,36 @@ public class PageListFragment extends Fragment {
         listView = l.findViewById(R.id.lvPages);
 
         final TextView textView;
-        pageList = (ArrayList<PageViewerFragment>) getArguments().getSerializable(ARRAYLIST_PVF);
+        //pageList = (ArrayList<PageViewerFragment>) getArguments().getSerializable(ARRAYLIST_PVF);
 
         // Restore the pageList
-        if ( savedInstanceState != null ) {
+        if ( pageList != null ) {
             int a = pageList.size();
             String b = Integer.toString(a);
-            Log.d("filled? ", b);
+            Log.d("count plf? ", b);
         } else { // Nothing to restore
-
+            pageList = new ArrayList<>();
         }
-        //ListViewAdapter<PageViewerFragment> adapter = new ListViewAdapter<PageViewerFragment>(getContext() ,arrayList);
+
         mAdapter = new ListViewAdapter(getContext(), android.R.layout.simple_list_item_1, pageList);
         listView.setAdapter(mAdapter);
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                //display the pvf(selected index of listView)(which is position here) into PVF
-//            }
-//        }));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //display the pvf(selected index of listView) into PVF
+                parentActivity.displayPVF(position);
+            }
+        });
         return l;
     }
 
-    public void updateList(PageViewerFragment pvf) {
-        pageList.add(pvf);
+    public void updateList() {
         mAdapter.notifyDataSetChanged();
+    }
+
+    interface PageListInterface {
+        void displayPVF(int position);
     }
 
     public class ListViewAdapter extends ArrayAdapter<PageViewerFragment> {

@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class PagerFragment extends Fragment {
 
     ArrayList<PageViewerFragment> pvfs;
-
+    PagerInterface parentActivity;
     ViewPager mPager;
     PVFsStateAdapter mPagerAdapter;
 
@@ -45,9 +45,11 @@ public class PagerFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static PagerFragment newInstance(ArrayList<PageViewerFragment> pageList) {
         PagerFragment fragment = new PagerFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARRAYLIST_PVF, pageList);
-        fragment.setArguments(args);
+        if (pageList != null) {
+            Bundle args = new Bundle();
+            args.putSerializable(ARRAYLIST_PVF, pageList);
+            fragment.setArguments(args);
+        }
         return fragment;
     }
 
@@ -55,6 +57,7 @@ public class PagerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if ( getArguments() != null ) {
+
             //pvfs = ( ArrayList<PageViewerFragment> )  getArguments().getSerializable("ARRAYLIST_PVF");
         }
 
@@ -63,6 +66,12 @@ public class PagerFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        if (context instanceof PagerFragment.PagerInterface) {
+            parentActivity = (PagerFragment.PagerInterface) context;
+        }
+        else {
+            throw new RuntimeException("Please implement PagerInterface to attach this fragment");
+        }
         //interface
         //title
         //go back and forth
@@ -77,6 +86,7 @@ public class PagerFragment extends Fragment {
         } else {
             pvfs = new ArrayList<>();
             pvfs.add(new PageViewerFragment());
+            parentActivity.passPVFs(pvfs);
         }
 
 
@@ -111,6 +121,10 @@ public class PagerFragment extends Fragment {
     public void updatePVFs() {
         pvfs.add(new PageViewerFragment());
         mPager.getAdapter().notifyDataSetChanged();
+    }
+
+    interface PagerInterface {
+        void passPVFs(ArrayList<PageViewerFragment> pvfs);
     }
 
     //Custom FragmentStatePagerAdapter
