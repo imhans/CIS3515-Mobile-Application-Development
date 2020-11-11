@@ -55,7 +55,7 @@ public class PageViewerFragment extends Fragment {
 
         l = inflater.inflate(R.layout.fragment_page_viewer, container, false);
         webView = l.findViewById(R.id.webView);
-        webView.loadUrl("https://google.com"); //To see if pvf is loaded into pf
+        //webView.loadUrl("https://google.com"); //To see if pvf is loaded into pf
 
         if (savedInstanceState != null)
             webView.restoreState(savedInstanceState);
@@ -92,7 +92,7 @@ public class PageViewerFragment extends Fragment {
         String title;
         if (webView != null) {
             title = webView.getTitle();
-            return title == null || title.isEmpty() ? webView.getUrl() : title;
+            return title == null || title.isEmpty() ? "Blank Page" : title;
         } else
         return "Blank Page";
     }

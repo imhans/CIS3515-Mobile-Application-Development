@@ -104,9 +104,8 @@ public class PagerFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                //Check the index of the current page
-                currentItem = pvfs.indexOf(position);
-                Log.d("position", "changed "+ position);
+                //Refresh the browser when the viewPager swiped
+                parentActivity.browserSwiped(position);
             }
 
             @Override
@@ -146,6 +145,7 @@ public class PagerFragment extends Fragment {
 
     interface PagerInterface {
         void passPVFs(ArrayList<PageViewerFragment> pvfs);
+        void browserSwiped(int position);
     }
 
     //Custom FragmentStatePagerAdapter
@@ -166,6 +166,12 @@ public class PagerFragment extends Fragment {
             return pvfs.size();
         }
 
+        public String getURL(int position) {
+            return pvfs.get(position).webView.getUrl();
+        }
+        public String getTitle(int position) {
+            return pvfs.get(position).webView.getTitle();
+        }
     }
 
 

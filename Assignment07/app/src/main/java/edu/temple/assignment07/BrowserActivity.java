@@ -4,9 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
-
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 public class BrowserActivity extends AppCompatActivity
@@ -100,7 +97,7 @@ public class BrowserActivity extends AppCompatActivity
     @Override
     public void fetchTitle(String title) {
         this.setTitle(title);
-        ;
+        plf.mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -117,7 +114,21 @@ public class BrowserActivity extends AppCompatActivity
     }
 
     @Override
-    public void displayPVF(int position) {
-        pf.mPager.setCurrentItem(position);
+    public void browserSwiped(int position) { //Orientation - vertical
+        //set url
+        pcf.urlText.setText(pf.mPagerAdapter.getURL(position));
+        //set title
+        this.setTitle(pf.mPagerAdapter.getTitle(position));
     }
+
+    @Override
+    public void displayPVF(int position) { //Orientation - horizontal
+        //display pvf
+        pf.mPager.setCurrentItem(position);
+        //set url
+        pcf.urlText.setText(pf.mPagerAdapter.getURL(position));
+        //set title
+        this.setTitle(pf.mPagerAdapter.getTitle(position));
+    }
+
 }

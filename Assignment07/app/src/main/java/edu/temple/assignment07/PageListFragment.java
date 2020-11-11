@@ -78,7 +78,7 @@ public class PageListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         l = inflater.inflate(R.layout.fragment_page_list, container, false);
         listView = l.findViewById(R.id.lvPages);
 
@@ -101,6 +101,8 @@ public class PageListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //display the pvf(selected index of listView) into PVF
+                //Modify the actionbar Title to the linked page
+                //Modify the url
                 parentActivity.displayPVF(position);
             }
         });
@@ -112,6 +114,12 @@ public class PageListFragment extends Fragment {
     }
 
     interface PageListInterface {
+        /*
+        The item of the listView is clicked,
+        -display the certain pvf
+        -set the title
+        -set the url
+        * */
         void displayPVF(int position);
     }
 
@@ -119,7 +127,6 @@ public class PageListFragment extends Fragment {
 
         Context context;
         ArrayList<PageViewerFragment> pages;
-        PageViewerFragment currentPVF;
 
         public ListViewAdapter(@NonNull Context context, int resource, @NonNull ArrayList<PageViewerFragment> pages) {
             super(context, resource, pages);
@@ -130,54 +137,19 @@ public class PageListFragment extends Fragment {
         @NonNull
         @Override
         public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//            View listItem = convertView;
-//            TextView textView;
-//            currentPVF = pages.get(position);
-//
-//            if ( listItem == null ) {
-//                int a = getPosition(currentPVF);
-//                textView = new TextView(context);
-//                textView.setText(pageList.get(position).getTitle());
-//                notifyDataSetChanged();
-//
-//                if (pageList.get(position) == null)
-//                    Log.d("ox", "empty");
-//                else
-//                    Log.d("xo",pageList.get(position).getTitle());
-//
-//            }
-//            else {
-//                textView = (TextView) convertView;
-//            }
-//
-//
-//
-////            if ( currentPVF != null )
-////                textView.setText("Blank");
-////            else
-////                textView.setText("null");
+
             TextView textView;
             if (convertView instanceof TextView) {
                 textView = (TextView) convertView;
+
             } else {
                 textView = new TextView(context);
                 textView.setPadding(5,8,8,5);
                 textView.setGravity(Gravity.CENTER);
                 textView.setTextSize(14);
+                textView.setText("Blank");
             }
             textView.setText(pages.get(position).getTitle());
-
-//            textView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //Display the instance of PVF clicked
-//
-//                    //Object clickedPVF = parent.getItemAtPosition(position);
-//
-//                    int a = getPosition(currentPVF);
-//                    Log.d("click", Integer.toString(a));
-//                }
-//            });
 
             return textView;
         }
