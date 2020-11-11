@@ -8,9 +8,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -34,31 +38,19 @@ public class PageListFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARRAYLIST_PVF = "ArrayList_pvf";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public PageListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PageListFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static PageListFragment newInstance(String param1, String param2) {
+    public static PageListFragment newInstance(ArrayList<PageViewerFragment> pageList) {
         PageListFragment fragment = new PageListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putSerializable(ARRAYLIST_PVF, pageList);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,8 +59,7 @@ public class PageListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //pageList = (ArrayList<PageViewerFragment>) getArguments().getSerializable(ARRAYLIST_PVF);
         }
     }
 
@@ -78,25 +69,28 @@ public class PageListFragment extends Fragment {
         // Inflate the layout for this fragment
         l = inflater.inflate(R.layout.fragment_page_list, container, false);
         listView = l.findViewById(R.id.lvPages);
-        pageList = new ArrayList<>();
-        TextView textView;
+
+        final TextView textView;
+        pageList = (ArrayList<PageViewerFragment>) getArguments().getSerializable(ARRAYLIST_PVF);
 
         // Restore the pageList
         if ( savedInstanceState != null ) {
-            //pageList.
+            int a = pageList.size();
+            String b = Integer.toString(a);
+            Log.d("filled? ", b);
         } else { // Nothing to restore
-            pageList.add(new PageViewerFragment());
+
         }
         //ListViewAdapter<PageViewerFragment> adapter = new ListViewAdapter<PageViewerFragment>(getContext() ,arrayList);
         mAdapter = new ListViewAdapter(getContext(), android.R.layout.simple_list_item_1, pageList);
         listView.setAdapter(mAdapter);
 
-        //if ( listView == null ) {
-//            textView = new TextView(getContext());
-//            textView.setText("Auto saved first item");
-//            listView.addView(textView);
-//            Log.d("testList", "done");
-        //}
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                //display the pvf(selected index of listView)(which is position here) into PVF
+//            }
+//        }));
         return l;
     }
 
@@ -109,6 +103,7 @@ public class PageListFragment extends Fragment {
 
         Context context;
         ArrayList<PageViewerFragment> pages;
+        PageViewerFragment currentPVF;
 
         public ListViewAdapter(@NonNull Context context, int resource, @NonNull ArrayList<PageViewerFragment> pages) {
             super(context, resource, pages);
@@ -118,29 +113,59 @@ public class PageListFragment extends Fragment {
 
         @NonNull
         @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View listItem = convertView;
+        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+//            View listItem = convertView;
+//            TextView textView;
+//            currentPVF = pages.get(position);
+//
+//            if ( listItem == null ) {
+//                int a = getPosition(currentPVF);
+//                textView = new TextView(context);
+//                textView.setText(pageList.get(position).getTitle());
+//                notifyDataSetChanged();
+//
+//                if (pageList.get(position) == null)
+//                    Log.d("ox", "empty");
+//                else
+//                    Log.d("xo",pageList.get(position).getTitle());
+//
+//            }
+//            else {
+//                textView = (TextView) convertView;
+//            }
+//
+//
+//
+////            if ( currentPVF != null )
+////                textView.setText("Blank");
+////            else
+////                textView.setText("null");
             TextView textView;
-
-
-            if ( listItem == null ) {
-                textView = new TextView(context);
-                textView.setText("Blank");
-            }
-            else {
+            if (convertView instanceof TextView) {
                 textView = (TextView) convertView;
+            } else {
+                textView = new TextView(context);
+                textView.setPadding(5,8,8,5);
+                textView.setGravity(Gravity.CENTER);
+                textView.setTextSize(14);
             }
+            textView.setText(pages.get(position).getTitle());
 
-            PageViewerFragment currentPVF = pages.get(position);
-
-//            if ( currentPVF != null )
-//                textView.setText("Blank");
-//            else
-//                textView.setText("null");
+//            textView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    //Display the instance of PVF clicked
+//
+//                    //Object clickedPVF = parent.getItemAtPosition(position);
+//
+//                    int a = getPosition(currentPVF);
+//                    Log.d("click", Integer.toString(a));
+//                }
+//            });
 
             return textView;
-            //return super.getView(position, convertView, parent);
         }
+
     }
 
 }

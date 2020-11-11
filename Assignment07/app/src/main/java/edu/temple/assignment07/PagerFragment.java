@@ -1,5 +1,6 @@
 package edu.temple.assignment07;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,10 +10,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -22,27 +25,14 @@ import java.util.ArrayList;
  */
 public class PagerFragment extends Fragment {
 
-    /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
-    private static final int NUM_PAGES = 5;
+    ArrayList<PageViewerFragment> pvfs;
 
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
-    private ViewPager viewPager;
-
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
-    private PagerAdapter pagerAdapter;
-
+    ViewPager mPager;
+    PVFsStateAdapter mPagerAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARRAYLIST_PVF = "ArrayList_pvf";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -52,20 +42,11 @@ public class PagerFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PagerFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static PagerFragment newInstance(String param1, String param2) {
+    public static PagerFragment newInstance(ArrayList<PageViewerFragment> pageList) {
         PagerFragment fragment = new PagerFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(ARRAYLIST_PVF, pageList);
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,33 +54,85 @@ public class PagerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if ( getArguments() != null ) {
+            //pvfs = ( ArrayList<PageViewerFragment> )  getArguments().getSerializable("ARRAYLIST_PVF");
+        }
+
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        //interface
+        //title
+        //go back and forth
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pager, container, false);
+
+        if (savedInstanceState != null) {
+            //
+        } else {
+            pvfs = new ArrayList<>();
+            pvfs.add(new PageViewerFragment());
+        }
+
+
+        View l = inflater.inflate(R.layout.fragment_pager, container, false);
+        mPager = l.findViewById(R.id.viewpager);
+        mPagerAdapter = new PVFsStateAdapter(this.getChildFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+        mPager.setCurrentItem(0);
+
+        mPager.addOnPageChangeListener( new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        return l;
     }
 
-    public static class ViewPagerAdpater extends FragmentStatePagerAdapter {
+    //Add a new PVF to the ArrayList and refresh once the imageButton clicked
+    public void updatePVFs() {
+        pvfs.add(new PageViewerFragment());
+        mPager.getAdapter().notifyDataSetChanged();
+    }
 
-        ArrayList<PageViewerFragment> arrayList;
+    //Custom FragmentStatePagerAdapter
+    public class PVFsStateAdapter extends FragmentStatePagerAdapter {
 
-        public ViewPagerAdpater(@NonNull FragmentManager fm) {
+        public PVFsStateAdapter(@NonNull FragmentManager fm) {
             super(fm);
         }
 
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            return new PageViewerFragment();
+            return pvfs.get(position);
         }
 
         @Override
         public int getCount() {
-            return arrayList.size();
+            return pvfs.size();
         }
 
     }
+
+
+
 }

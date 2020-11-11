@@ -55,6 +55,7 @@ public class PageViewerFragment extends Fragment {
 
         l = inflater.inflate(R.layout.fragment_page_viewer, container, false);
         webView = l.findViewById(R.id.webView);
+        webView.loadUrl("https://google.com"); //To see if pvf is loaded into pf
 
         if (savedInstanceState != null)
             webView.restoreState(savedInstanceState);
@@ -73,6 +74,7 @@ public class PageViewerFragment extends Fragment {
                 //Fetch the title name of the current page and Set the action bar title
                 pageTitle = webView.getTitle();
                 parentActivity.fetchTitle(pageTitle);
+
             }
         });
 
@@ -85,6 +87,14 @@ public class PageViewerFragment extends Fragment {
         else
             webView.loadUrl(url);
 
+    }
+    public String getTitle() {
+        String title;
+        if (webView != null) {
+            title = webView.getTitle();
+            return title == null || title.isEmpty() ? webView.getUrl() : title;
+        } else
+        return "Blank Page";
     }
 
     interface ViewerInterface {

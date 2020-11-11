@@ -16,6 +16,7 @@ public class BrowserActivity extends AppCompatActivity
     PageViewerFragment pvf;
     PageListFragment plf;
     BrowserControlFragment bcf;
+    PagerFragment pf;
     boolean flag;
 
     @Override
@@ -40,12 +41,14 @@ public class BrowserActivity extends AppCompatActivity
             pvf = new PageViewerFragment();
             bcf = new BrowserControlFragment();
             plf = new PageListFragment();
+            pf = new PagerFragment();
 
             if (flag) {
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.page_control, pcf)
-                        .add(R.id.page_viewer, pvf)
+                        .add(R.id.page_viewer, pf)
                         .add(R.id.page_list, plf)
+
                         .add(R.id.browser_control, bcf)
                         .addToBackStack(null)
                         .commit();
@@ -53,8 +56,9 @@ public class BrowserActivity extends AppCompatActivity
             else {
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.page_control, pcf)
-                        .add(R.id.page_viewer, pvf)
+                        .add(R.id.page_viewer, pf)
                         .add(R.id.browser_control, bcf)
+                        .add(plf, "plf")
                         .addToBackStack(null)
                         .commit();
             }
@@ -89,11 +93,13 @@ public class BrowserActivity extends AppCompatActivity
     @Override
     public void fetchTitle(String title) {
         this.setTitle(title);
+        ;
     }
 
     @Override
     public void addPage() {
         //Add a new instance of PVF into the arrayList
         plf.updateList(new PageViewerFragment());
+        pf.updatePVFs();
     }
 }
