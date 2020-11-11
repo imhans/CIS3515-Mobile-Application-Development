@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class PagerFragment extends Fragment {
     PagerInterface parentActivity;
     ViewPager mPager;
     PVFsStateAdapter mPagerAdapter;
+    int currentItem;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,9 +74,6 @@ public class PagerFragment extends Fragment {
         else {
             throw new RuntimeException("Please implement PagerInterface to attach this fragment");
         }
-        //interface
-        //title
-        //go back and forth
     }
 
     @Override
@@ -105,7 +104,9 @@ public class PagerFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-
+                //Check the index of the current page
+                currentItem = pvfs.indexOf(position);
+                Log.d("position", "changed "+ position);
             }
 
             @Override
@@ -120,7 +121,27 @@ public class PagerFragment extends Fragment {
     //Add a new PVF to the ArrayList and refresh once the imageButton clicked
     public void updatePVFs() {
         pvfs.add(new PageViewerFragment());
+
         mPager.getAdapter().notifyDataSetChanged();
+        mPager.setCurrentItem(pvfs.size()-1);
+    }
+
+    //Load the page using url into PagerFragment
+    public void searchPF(String url) {
+        if (!(url.startsWith("http://") || url.startsWith("https://"))) {
+            pvfs.get(mPager.getCurrentItem()).webView.loadUrl("https://" + url);
+
+        } else{
+                pvfs.get(mPager.getCurrentItem()).webView.loadUrl(url);
+            }
+    }
+
+    public void goBackPF() {
+        pvfs.get(mPager.getCurrentItem()).webView.goBack();
+    }
+
+    public void goForwardPF() {
+        pvfs.get(mPager.getCurrentItem()).webView.goForward();
     }
 
     interface PagerInterface {

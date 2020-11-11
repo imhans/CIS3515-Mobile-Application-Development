@@ -76,17 +76,20 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     public void searchClicked(String url) {
-        pvf.loadWeb(url);
+        //pvf.loadWeb(url); this is used for PVF to display the webView directly
+        pf.searchPF(url);
     }
 
     @Override
     public void goPrevious() {
-        pvf.webView.goBack();
+        //pvf.webView.goBack();
+        pf.goBackPF();
     }
 
     @Override
     public void goNext() {
-        pvf.webView.goForward();
+        //pvf.webView.goForward();
+        pf.goForwardPF();
     }
 
     @Override
@@ -103,16 +106,14 @@ public class BrowserActivity extends AppCompatActivity
     @Override
     public void addPage() {
         //Add a new instance of PVF into the arrayList
-        //plf.updateList(new PageViewerFragment());
         pf.updatePVFs();
         plf.updateList();
-        //Log.d("count",Integer.toString(pf.mPager.getAdapter().getCount()));
     }
 
     @Override
     public void passPVFs(ArrayList<PageViewerFragment> pvfs) {
         plf.pageList = pvfs;
-        //plf.updateList(); 왜 여기선 눌포인트뜸? 위에서는 되고 시발?
+        //plf.updateList(); Compared to line 110 in addPage() method, this one only gets null pointer.
     }
 
     @Override
