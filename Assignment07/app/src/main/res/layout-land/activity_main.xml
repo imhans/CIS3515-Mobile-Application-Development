@@ -52,7 +52,7 @@
         <FrameLayout
             android:id="@+id/page_list"
             android:layout_width="match_parent"
-            android:layout_height="279dp">
+            android:layout_height="235dp">
 
         </FrameLayout>
     </LinearLayout>

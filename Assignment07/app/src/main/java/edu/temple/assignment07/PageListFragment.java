@@ -52,7 +52,6 @@ public class PageListFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        //outState.putSerializable(ARRAYLIST_PVF, pageList);
         super.onSaveInstanceState(outState);
     }
 
@@ -61,8 +60,7 @@ public class PageListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if ( savedInstanceState != null ) {
             pvfs = (ArrayList<PageViewerFragment>) savedInstanceState.getSerializable(ARRAYLIST_PVF);
-
-            Toast.makeText(getContext(), "ListView is NOT NULL: ", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "ListView is NOT NULL: ", Toast.LENGTH_LONG).show();
         }
         else {
             Toast.makeText(getContext(), "ListView is NULL: ", Toast.LENGTH_LONG).show();
@@ -75,13 +73,6 @@ public class PageListFragment extends Fragment {
 
         l = inflater.inflate(R.layout.fragment_page_list, container, false);
         listView = l.findViewById(R.id.lvPages);
-
-        // Restore the pageList
-        if ( pvfs != null ) {
-            Toast.makeText(getContext(), "mmmm?", Toast.LENGTH_LONG).show();
-        } else { // Nothing to restore
-            Toast.makeText(getContext(), "hmmm", Toast.LENGTH_LONG).show();
-        }
 
         mAdapter = new ListViewAdapter(getContext(), android.R.layout.simple_list_item_1, pvfs);
         listView.setAdapter(mAdapter);

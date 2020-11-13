@@ -2,6 +2,7 @@ package edu.temple.assignment07;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -16,7 +17,7 @@ public class BrowserActivity extends AppCompatActivity
         PageListFragment.PageListInterface {
 
     PageControlFragment pcf;
-    //PageViewerFragment pvf;
+    PageViewerFragment pvf;
     PageListFragment plf;
     BrowserControlFragment bcf;
     PagerFragment pf;
@@ -28,6 +29,7 @@ public class BrowserActivity extends AppCompatActivity
         getSupportFragmentManager().putFragment(outState, "pf", pf);
         getSupportFragmentManager().putFragment(outState, "plf", plf);
         getSupportFragmentManager().putFragment(outState, "bcf", bcf);
+        //getSupportFragmentManager().putFragment(outState, "pvf", pvf);
         super.onSaveInstanceState(outState);
     }
 
@@ -38,6 +40,7 @@ public class BrowserActivity extends AppCompatActivity
         this.setTitle(getResources().getString(R.string.title));
 
         flag = findViewById(R.id.page_list) != null;
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         //No transaction
         if (getSupportFragmentManager().findFragmentById(R.id.page_control) == null
@@ -48,39 +51,39 @@ public class BrowserActivity extends AppCompatActivity
             plf = new PageListFragment();
             pf = new PagerFragment();
 
+
+
+            Toast.makeText(getApplicationContext(), "here", Toast.LENGTH_LONG).show();
             if (flag) {
-                getSupportFragmentManager().beginTransaction()
+                transaction
                         .add(R.id.page_control, pcf)
                         .add(R.id.page_viewer, pf)
                         .add(R.id.page_list, plf)
                         .add(R.id.browser_control, bcf)
-                        .addToBackStack(null)
+                        //.add(pvf, "pvf")
+                        //.addToBackStack(null)
                         .commit();
             }
             else {
-                getSupportFragmentManager().beginTransaction()
+                transaction
                         .add(R.id.page_control, pcf)
                         .add(R.id.page_viewer, pf)
                         .add(R.id.browser_control, bcf)
                         .add(plf, "plf")
-                        .addToBackStack(null)
+                        //.add(pvf, "pvf")
+                        //.addToBackStack(null)
                         .commit();
             }
 
         } else {
-            if (flag) {
-                pcf = (PageControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pcf");
-                pf = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pf");
-                plf = (PageListFragment) getSupportFragmentManager().getFragment(savedInstanceState, "plf");
-                bcf = (BrowserControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "bcf");
-            }
-            else {
-                pcf = (PageControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pcf");
-                pf = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pf");
-                bcf = (BrowserControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "bcf");
-                plf = (PageListFragment) getSupportFragmentManager().getFragment(savedInstanceState, "plf");
-            }
+            pcf = (PageControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pcf");
+            pf = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pf");
+            plf = (PageListFragment) getSupportFragmentManager().getFragment(savedInstanceState, "plf");
+            bcf = (BrowserControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "bcf");
 
+            if (getSupportFragmentManager().findFragmentById(R.id.page_list) == null) {
+                transaction.replace(R.id.page_list, plf).commit();
+            }
         }
 
     }
@@ -95,7 +98,6 @@ public class BrowserActivity extends AppCompatActivity
     public void goPrevious() {
         //pvf.webView.goBack();
         pf.goBackPF();
-        Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_LONG).show();
     }
 
     @Override

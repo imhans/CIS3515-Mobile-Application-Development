@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
@@ -73,13 +74,10 @@ public class PagerFragment extends Fragment {
             pvfs.add(new PageViewerFragment());
             parentActivity.passPVFs(pvfs);
             currentPosition = 0;
-            Toast.makeText(getContext(), "savedInstanceState is null", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "savedInstanceState is null", Toast.LENGTH_LONG).show();
         }
         else {
             parentActivity.passPVFs(pvfs);
-            int a = pvfs.size();
-            String b = Integer.toString(a);
-            Toast.makeText(getContext(), "savedInstanceState is NOT null: " + b, Toast.LENGTH_LONG).show();
         }
 
         View l = inflater.inflate(R.layout.fragment_pager, container, false);
@@ -100,7 +98,6 @@ public class PagerFragment extends Fragment {
                 //Refresh the browser when the viewPager swiped
                 parentActivity.browserSwiped(position);
                 currentPosition = position;
-                //Toast.makeText(getContext(), "Page " + position + " is selected", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -131,11 +128,15 @@ public class PagerFragment extends Fragment {
     }
 
     public void goBackPF() {
-        pvfs.get(mPager.getCurrentItem()).webView.goBack();
+        if (pvfs.get(currentPosition).webView.canGoBack())
+            Toast.makeText(getContext(), "can go back", Toast.LENGTH_LONG).show();
+
+        pvfs.get(currentPosition).webView.goBack();
     }
 
     public void goForwardPF() {
-        pvfs.get(mPager.getCurrentItem()).webView.goForward();
+
+        pvfs.get(currentPosition).webView.goForward();
     }
 
     interface PagerInterface {
