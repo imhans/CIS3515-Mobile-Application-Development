@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class BrowserActivity extends AppCompatActivity
@@ -14,7 +16,7 @@ public class BrowserActivity extends AppCompatActivity
         PageListFragment.PageListInterface {
 
     PageControlFragment pcf;
-    PageViewerFragment pvf;
+    //PageViewerFragment pvf;
     PageListFragment plf;
     BrowserControlFragment bcf;
     PagerFragment pf;
@@ -22,9 +24,11 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
         getSupportFragmentManager().putFragment(outState, "pcf", pcf);
-        getSupportFragmentManager().putFragment(outState, "pvf", pvf);
+        getSupportFragmentManager().putFragment(outState, "pf", pf);
+        getSupportFragmentManager().putFragment(outState, "plf", plf);
+        getSupportFragmentManager().putFragment(outState, "bcf", bcf);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -39,7 +43,7 @@ public class BrowserActivity extends AppCompatActivity
         if (getSupportFragmentManager().findFragmentById(R.id.page_control) == null
         && getSupportFragmentManager().findFragmentById(R.id.page_viewer ) == null) {
             pcf = new PageControlFragment();
-            pvf = new PageViewerFragment();
+            //pvf = new PageViewerFragment();
             bcf = new BrowserControlFragment();
             plf = new PageListFragment();
             pf = new PagerFragment();
@@ -49,7 +53,6 @@ public class BrowserActivity extends AppCompatActivity
                         .add(R.id.page_control, pcf)
                         .add(R.id.page_viewer, pf)
                         .add(R.id.page_list, plf)
-
                         .add(R.id.browser_control, bcf)
                         .addToBackStack(null)
                         .commit();
@@ -65,8 +68,19 @@ public class BrowserActivity extends AppCompatActivity
             }
 
         } else {
-            pcf = (PageControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pcf");
-            pvf = (PageViewerFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pvf");
+            if (flag) {
+                pcf = (PageControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pcf");
+                pf = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pf");
+                plf = (PageListFragment) getSupportFragmentManager().getFragment(savedInstanceState, "plf");
+                bcf = (BrowserControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "bcf");
+            }
+            else {
+                pcf = (PageControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pcf");
+                pf = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState, "pf");
+                bcf = (BrowserControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, "bcf");
+                plf = (PageListFragment) getSupportFragmentManager().getFragment(savedInstanceState, "plf");
+            }
+
         }
 
     }
@@ -81,6 +95,7 @@ public class BrowserActivity extends AppCompatActivity
     public void goPrevious() {
         //pvf.webView.goBack();
         pf.goBackPF();
+        Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -109,7 +124,7 @@ public class BrowserActivity extends AppCompatActivity
 
     @Override
     public void passPVFs(ArrayList<PageViewerFragment> pvfs) {
-        plf.pageList = pvfs;
+        plf.pvfs = pvfs;
         //plf.updateList(); Compared to line 110 in addPage() method, this one only gets null pointer.
     }
 

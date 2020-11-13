@@ -28,6 +28,7 @@ public class PageControlFragment extends Fragment {
     ImageButton previous;
     SearchClickedInterface parentActivity;
 
+    private static final String URL_STRING = "url";
 
     public PageControlFragment() {
         // Required empty public constructor
@@ -46,8 +47,8 @@ public class PageControlFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(URL_STRING, urlText.getText().toString());
         super.onSaveInstanceState(outState);
-        outState.putString("url", urlText.getText().toString());
     }
 
     @Override
@@ -62,7 +63,7 @@ public class PageControlFragment extends Fragment {
 
         //Restore the EditText
         if ( savedInstanceState != null )
-            urlText.setText(savedInstanceState.getString("url"));
+            urlText.setText(savedInstanceState.getString(URL_STRING));
 
         //Search button
         search.setOnClickListener(new View.OnClickListener() {

@@ -19,49 +19,37 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PagerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PagerFragment extends Fragment {
 
     ArrayList<PageViewerFragment> pvfs;
     PagerInterface parentActivity;
     ViewPager mPager;
     PVFsStateAdapter mPagerAdapter;
-    int currentItem;
+    int currentPosition;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARRAYLIST_PVF = "ArrayList_pvf";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String CURRENT_POSITION = "Current_position";
 
     public PagerFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static PagerFragment newInstance(ArrayList<PageViewerFragment> pageList) {
-        PagerFragment fragment = new PagerFragment();
-        if (pageList != null) {
-            Bundle args = new Bundle();
-            args.putSerializable(ARRAYLIST_PVF, pageList);
-            fragment.setArguments(args);
-        }
-        return fragment;
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putSerializable(ARRAYLIST_PVF, pvfs);
+        outState.putInt(CURRENT_POSITION, currentPosition);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if ( getArguments() != null ) {
-
-            //pvfs = ( ArrayList<PageViewerFragment> )  getArguments().getSerializable("ARRAYLIST_PVF");
+        if (savedInstanceState != null) {
+            pvfs = (ArrayList<PageViewerFragment>) savedInstanceState.getSerializable(ARRAYLIST_PVF);
+            currentPosition = savedInstanceState.getInt(CURRENT_POSITION);
         }
+        super.onCreate(savedInstanceState);
 
     }
 
@@ -80,20 +68,25 @@ public class PagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (savedInstanceState != null) {
-            //
-        } else {
+        if (savedInstanceState == null) {
             pvfs = new ArrayList<>();
             pvfs.add(new PageViewerFragment());
             parentActivity.passPVFs(pvfs);
+            currentPosition = 0;
+            Toast.makeText(getContext(), "savedInstanceState is null", Toast.LENGTH_LONG).show();
         }
-
+        else {
+            parentActivity.passPVFs(pvfs);
+            int a = pvfs.size();
+            String b = Integer.toString(a);
+            Toast.makeText(getContext(), "savedInstanceState is NOT null: " + b, Toast.LENGTH_LONG).show();
+        }
 
         View l = inflater.inflate(R.layout.fragment_pager, container, false);
         mPager = l.findViewById(R.id.viewpager);
         mPagerAdapter = new PVFsStateAdapter(this.getChildFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        mPager.setCurrentItem(0);
+        mPager.setCurrentItem(currentPosition);
 
         mPager.addOnPageChangeListener( new ViewPager.OnPageChangeListener() {
 
@@ -106,6 +99,8 @@ public class PagerFragment extends Fragment {
             public void onPageSelected(int position) {
                 //Refresh the browser when the viewPager swiped
                 parentActivity.browserSwiped(position);
+                currentPosition = position;
+                //Toast.makeText(getContext(), "Page " + position + " is selected", Toast.LENGTH_LONG).show();
             }
 
             @Override

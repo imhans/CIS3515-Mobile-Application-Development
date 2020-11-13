@@ -19,41 +19,24 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PageListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PageListFragment extends Fragment {
 
     View l;
     ListView listView;
     ListViewAdapter mAdapter;
-    ArrayList<PageViewerFragment> pageList;
+    ArrayList<PageViewerFragment> pvfs;
     PageListInterface parentActivity;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARRAYLIST_PVF = "ArrayList_pvf";
-
-    // TODO: Rename and change types of parameters
 
     public PageListFragment() {
         // Required empty public constructor
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static PageListFragment newInstance(ArrayList<PageViewerFragment> pageList) {
-        PageListFragment fragment = new PageListFragment();
-        Bundle args = new Bundle();
-        //args.putSerializable(ARRAYLIST_PVF, pageList);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -68,10 +51,21 @@ public class PageListFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        //outState.putSerializable(ARRAYLIST_PVF, pageList);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null && getArguments().containsKey("ARRAYLIST_PVF")) {
-            pageList = (ArrayList<PageViewerFragment>) getArguments().getSerializable(ARRAYLIST_PVF);
+        if ( savedInstanceState != null ) {
+            pvfs = (ArrayList<PageViewerFragment>) savedInstanceState.getSerializable(ARRAYLIST_PVF);
+
+            Toast.makeText(getContext(), "ListView is NOT NULL: ", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(getContext(), "ListView is NULL: ", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -82,19 +76,14 @@ public class PageListFragment extends Fragment {
         l = inflater.inflate(R.layout.fragment_page_list, container, false);
         listView = l.findViewById(R.id.lvPages);
 
-        final TextView textView;
-        //pageList = (ArrayList<PageViewerFragment>) getArguments().getSerializable(ARRAYLIST_PVF);
-
         // Restore the pageList
-        if ( pageList != null ) {
-            int a = pageList.size();
-            String b = Integer.toString(a);
-            Log.d("count plf? ", b);
+        if ( pvfs != null ) {
+            Toast.makeText(getContext(), "mmmm?", Toast.LENGTH_LONG).show();
         } else { // Nothing to restore
-            pageList = new ArrayList<>();
+            Toast.makeText(getContext(), "hmmm", Toast.LENGTH_LONG).show();
         }
 
-        mAdapter = new ListViewAdapter(getContext(), android.R.layout.simple_list_item_1, pageList);
+        mAdapter = new ListViewAdapter(getContext(), android.R.layout.simple_list_item_1, pvfs);
         listView.setAdapter(mAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
