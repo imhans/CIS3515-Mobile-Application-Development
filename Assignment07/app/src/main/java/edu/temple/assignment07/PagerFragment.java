@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 

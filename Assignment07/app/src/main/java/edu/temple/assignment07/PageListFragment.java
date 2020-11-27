@@ -63,7 +63,7 @@ public class PageListFragment extends Fragment {
             //Toast.makeText(getContext(), "ListView is NOT NULL: ", Toast.LENGTH_LONG).show();
         }
         else {
-            Toast.makeText(getContext(), "ListView is NULL: ", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "ListView is NULL: ", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +18,14 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
+import java.io.Serializable;
 import java.net.URI;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
-public class PageViewerFragment extends Fragment {
+public class PageViewerFragment extends Fragment implements Serializable, Parcelable {
 
     View l;
     WebView webView;
@@ -101,4 +105,15 @@ public class PageViewerFragment extends Fragment {
         void fetchURL(String url);
         void fetchTitle(String title);
     }
+
+    /* Needed the methods to avoid Runtime exception: Parcelable encountered IOException writing serializable object */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
 }

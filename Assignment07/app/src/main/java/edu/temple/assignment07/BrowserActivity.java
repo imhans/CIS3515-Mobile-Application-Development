@@ -17,7 +17,7 @@ public class BrowserActivity extends AppCompatActivity
         PageListFragment.PageListInterface {
 
     PageControlFragment pcf;
-    PageViewerFragment pvf;
+    //PageViewerFragment pvf;
     PageListFragment plf;
     BrowserControlFragment bcf;
     PagerFragment pf;
@@ -52,8 +52,6 @@ public class BrowserActivity extends AppCompatActivity
             pf = new PagerFragment();
 
 
-
-            Toast.makeText(getApplicationContext(), "here", Toast.LENGTH_LONG).show();
             if (flag) {
                 transaction
                         .add(R.id.page_control, pcf)
