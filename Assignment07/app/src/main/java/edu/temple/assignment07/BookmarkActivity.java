@@ -34,19 +34,25 @@ public class BookmarkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmark);
 
+        closeButton = findViewById(R.id.btnClose);
         listView = findViewById(R.id.lvBookmark);
 
         bms = new ArrayList<Bookmark>();
+        // Sample data
         Bookmark a = new Bookmark("http://google.com", "Google");
         Bookmark b = new Bookmark("http://google.com", "Google2");
         bms.add(a); bms.add(b);
-        String c = Integer.toString(bms.size());
-        Log.d("BMs", c);
 
         mAdapter = new bookmarkAdapter(this, android.R.layout.simple_list_item_2, bms);
 
         listView.setAdapter(mAdapter);
 
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
