@@ -5,11 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -19,7 +17,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class BookmarkActivity extends AppCompatActivity {
@@ -27,7 +28,10 @@ public class BookmarkActivity extends AppCompatActivity {
     ListView listView;
     bookmarkAdapter mAdapter;
     Button closeButton;
-    ArrayList<Bookmark> bms;
+    ArrayList<Bookmark> bookmarkArrayList;
+
+    private static final String ARRAYLIST_BMs = "ArrayList_bookmarks";
+    private static final String ARRAYLIST_BMs_String = "ArrayList_bookmarks_String";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +41,15 @@ public class BookmarkActivity extends AppCompatActivity {
         closeButton = findViewById(R.id.btnClose);
         listView = findViewById(R.id.lvBookmark);
 
-        bms = new ArrayList<Bookmark>();
-        // Sample data
-        Bookmark a = new Bookmark("http://google.com", "Google");
-        Bookmark b = new Bookmark("http://google.com", "Google2");
-        bms.add(a); bms.add(b);
+        // Load Bookmarks from the storage
+        loadBookmarks();
 
-        mAdapter = new bookmarkAdapter(this, android.R.layout.simple_list_item_2, bms);
+//        // Sample data
+//        Bookmark a = new Bookmark("http://google.com", "Google");
+//        Bookmark b = new Bookmark("http://google.com", "Google2");
+//        bookmarkArrayList.add(a); bookmarkArrayList.add(b);
+
+        mAdapter = new bookmarkAdapter(this, android.R.layout.simple_list_item_2, bookmarkArrayList);
 
         listView.setAdapter(mAdapter);
 
@@ -53,6 +59,18 @@ public class BookmarkActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void loadBookmarks() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.shared_preferences), MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(ARRAYLIST_BMs_String, null);
+        Type type = new TypeToken<ArrayList<Bookmark>>() {}.getType();
+        bookmarkArrayList = gson.fromJson(json, type);
+
+        if ( bookmarkArrayList == null ) {
+            bookmarkArrayList = new ArrayList<>();
+        }
     }
 
 
@@ -90,6 +108,8 @@ public class BookmarkActivity extends AppCompatActivity {
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int index = position;
+
                     Toast.makeText(context, "it works", Toast.LENGTH_LONG).show();
                 }
             });

@@ -118,6 +118,7 @@ public class PagerFragment extends Fragment {
         mPager.setCurrentItem(pvfs.size()-1);
     }
 
+
     //Load the page using url into PagerFragment
     public void searchPF(String url) {
         if (!(url.startsWith("http://") || url.startsWith("https://"))) {
@@ -138,6 +139,17 @@ public class PagerFragment extends Fragment {
     public void goForwardPF() {
 
         pvfs.get(currentPosition).webView.goForward();
+    }
+
+    public boolean viewIsNull() {
+        return pvfs.get(currentPosition).webView.getUrl() == null;
+    }
+
+    public Bookmark createBookmark() {
+        String url = pvfs.get(currentPosition).webView.getUrl();
+        String title = pvfs.get(currentPosition).webView.getTitle();
+        Bookmark bookmark = new Bookmark(url, title);
+        return bookmark;
     }
 
     interface PagerInterface {

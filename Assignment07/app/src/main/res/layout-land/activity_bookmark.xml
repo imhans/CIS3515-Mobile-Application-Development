@@ -5,12 +5,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_centerInParent="true"
     tools:context=".BookmarkActivity">
 
     <ListView
         android:id="@+id/lvBookmark"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="260dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="1dp"
@@ -25,8 +26,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lvBookmark"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginStart="300dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="300dp"
         android:text="@string/close_bookmark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

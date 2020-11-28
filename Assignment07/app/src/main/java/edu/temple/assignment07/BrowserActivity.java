@@ -123,6 +123,16 @@ public class BrowserActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean isNull() {
+        return pf.viewIsNull();
+    }
+
+    @Override
+    public Bookmark getBookmark() {
+        return pf.createBookmark();
+    }
+
+    @Override
     public void passPVFs(ArrayList<PageViewerFragment> pvfs) {
         plf.pvfs = pvfs;
         //plf.updateList(); Compared to line 110 in addPage() method, this one only gets null pointer.

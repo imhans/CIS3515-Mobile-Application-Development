@@ -36,6 +36,22 @@ public class PageViewerFragment extends Fragment implements Serializable, Parcel
         // Required empty public constructor
     }
 
+    protected PageViewerFragment(Parcel in) {
+        pageTitle = in.readString();
+    }
+
+    public static final Creator<PageViewerFragment> CREATOR = new Creator<PageViewerFragment>() {
+        @Override
+        public PageViewerFragment createFromParcel(Parcel in) {
+            return new PageViewerFragment(in);
+        }
+
+        @Override
+        public PageViewerFragment[] newArray(int size) {
+            return new PageViewerFragment[size];
+        }
+    };
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -113,7 +129,7 @@ public class PageViewerFragment extends Fragment implements Serializable, Parcel
     }
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(pageTitle);
     }
 
 }
