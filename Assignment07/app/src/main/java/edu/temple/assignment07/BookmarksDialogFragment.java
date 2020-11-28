@@ -59,10 +59,10 @@ public class BookmarksDialogFragment extends DialogFragment {
         builder.setMessage(R.string.bookmark_delete_dialog)
                 .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // deleteBookmarks();
-                        // Update the sharedPreferences
-                        // Refresh(notify) the list for the bookmarks (at here?)
-                        Toast.makeText(getContext(), "works", Toast.LENGTH_SHORT).show();
+                        int index = parentActivity.fetchIndex();
+                        updateBookmarks(index); //Delete and Update the sharedPreferences
+                        parentActivity.refreshListView(index); // Refresh(notify) the list for the bookmarks
+                        Toast.makeText(getContext(), "The bookmark is successfully deleted", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -76,22 +76,24 @@ public class BookmarksDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    private void deleteBookmarks() {
+    private void updateBookmarks(int index) {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(getString(R.string.shared_preferences), MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString(ARRAYLIST_BMs_String, null);
         Type type = new TypeToken<ArrayList<Bookmark>>() {}.getType();
         bookmarkArrayList = gson.fromJson(json, type);
 
+        // fetch the index for the position
+        bookmarkArrayList.remove(index);
 
-        // fetch the int for the position
-        int index = parentActivity.fetchIndex();
-        //bookmarkArrayList.remove(position);
-
-
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        json = gson.toJson(bookmarkArrayList);
+        editor.putString(ARRAYLIST_BMs_String, json);
+        editor.apply();
     }
 
     interface BookmarkDeletion {
         int fetchIndex();
+        void refreshListView(int index);
     }
 }

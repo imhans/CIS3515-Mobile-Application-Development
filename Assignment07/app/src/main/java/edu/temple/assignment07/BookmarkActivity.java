@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -34,8 +35,8 @@ public class BookmarkActivity extends AppCompatActivity implements BookmarksDial
     bookmarkAdapter mAdapter;
     Button closeButton;
     ArrayList<Bookmark> bookmarkArrayList;
+    int clickedIndex;
 
-    private static final String ARRAYLIST_BMs = "ArrayList_bookmarks";
     private static final String ARRAYLIST_BMs_String = "ArrayList_bookmarks_String";
 
     @Override
@@ -48,11 +49,6 @@ public class BookmarkActivity extends AppCompatActivity implements BookmarksDial
 
         // Load Bookmarks from the storage
         loadBookmarks();
-
-//        // Sample data
-//        Bookmark a = new Bookmark("http://google.com", "Google");
-//        Bookmark b = new Bookmark("http://google.com", "Google2");
-//        bookmarkArrayList.add(a); bookmarkArrayList.add(b);
 
         mAdapter = new bookmarkAdapter(this, android.R.layout.simple_list_item_2, bookmarkArrayList);
 
@@ -95,13 +91,20 @@ public class BookmarkActivity extends AppCompatActivity implements BookmarksDial
         DialogFragment newFragment = new BookmarksDialogFragment();
         newFragment.show(getSupportFragmentManager(), "delete");
     }
-    @Override
-    public int fetchIndex() {
-        return 1;
-    }
+
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    @Override
+    public int fetchIndex() {
+        return clickedIndex;
+    }
+    @Override
+    public void refreshListView(int index) {
+        mAdapter.bookmarks.remove(index);
+        mAdapter.notifyDataSetChanged();
     }
 
     public class bookmarkAdapter extends ArrayAdapter<Bookmark> {
@@ -118,7 +121,7 @@ public class BookmarkActivity extends AppCompatActivity implements BookmarksDial
 
         @NonNull
         @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             View view = convertView;
             TextView textView;
             ImageButton deleteButton;
@@ -139,16 +142,8 @@ public class BookmarkActivity extends AppCompatActivity implements BookmarksDial
 
                 @Override
                 public void onClick(View v) {
+                    clickedIndex = position;
                     displayAlertDialog();
-
-//                    switch (position) {
-//                        case 0:
-//                            Intent i = new Intent(getApplicationContext(), YourNewActivty.class);
-//                            startActivity(i);
-//                            break;
-//                    }
-
-                    Toast.makeText(context, "it works", Toast.LENGTH_LONG).show();
                 }
             });
 
