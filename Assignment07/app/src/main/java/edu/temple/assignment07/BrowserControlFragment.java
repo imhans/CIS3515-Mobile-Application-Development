@@ -17,8 +17,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -61,7 +63,7 @@ public class BrowserControlFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        bookmarkArrayList = new ArrayList();
+        loadBookmarks();
 
         // Inflate the layout for this fragment
         l = inflater.inflate(R.layout.fragment_browser_control, container, false);
@@ -82,7 +84,7 @@ public class BrowserControlFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(new Intent(getActivity(), BookmarkActivity.class));
-                getActivity().startActivity(intent);
+                getActivity().startActivityForResult(intent, 0);
             }
         });
 
@@ -112,6 +114,17 @@ public class BrowserControlFragment extends Fragment {
         String json = gson.toJson(arrayList);
         editor.putString(ARRAYLIST_BMs_String, json);
         editor.apply();
+    }
+    private void loadBookmarks() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(getString(R.string.shared_preferences), MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(ARRAYLIST_BMs_String, null);
+        Type type = new TypeToken<ArrayList<Bookmark>>() {}.getType();
+        bookmarkArrayList = gson.fromJson(json, type);
+
+        if ( bookmarkArrayList == null ) {
+            bookmarkArrayList = new ArrayList<>();
+        }
     }
 
     interface ImageBtnClicked {

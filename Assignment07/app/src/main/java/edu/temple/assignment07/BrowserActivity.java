@@ -1,9 +1,12 @@
 package edu.temple.assignment07;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -31,6 +34,18 @@ public class BrowserActivity extends AppCompatActivity
         getSupportFragmentManager().putFragment(outState, "bcf", bcf);
         //getSupportFragmentManager().putFragment(outState, "pvf", pvf);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 0) {
+            if ( resultCode == Activity.RESULT_OK) {
+                int index = pf.mPager.getCurrentItem();
+                pf.pvfs.get(index).webView.loadUrl(data.getStringExtra(getString(R.string.CLICKED_BOOKMARK_URL)));
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -155,5 +170,4 @@ public class BrowserActivity extends AppCompatActivity
         //set title
         this.setTitle(pf.mPagerAdapter.getTitle(position));
     }
-
 }

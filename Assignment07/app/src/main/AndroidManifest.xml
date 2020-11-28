@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".BookmarkActivity"
-            android:label="@string/bookmark"
-            android:parentActivityName=".BrowserActivity"/>
+            android:label="@string/bookmark"/>
         <activity android:name=".BrowserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
