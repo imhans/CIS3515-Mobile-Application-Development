@@ -10,6 +10,8 @@
     <string name="delete">DELETE</string>
     <string name="cancel">CANCEL</string>
     <string name="CLICKED_BOOKMARK_URL">Clicked_Bookmark_Url</string>
+    <string name="share">Share</string>
     <integer name="LAUNCH">0</integer>
+
 
 </resources>
