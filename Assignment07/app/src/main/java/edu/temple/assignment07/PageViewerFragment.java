@@ -101,6 +101,10 @@ public class PageViewerFragment extends Fragment implements Serializable, Parcel
         return l;
     }
 
+    public boolean isNull() {
+        return webView == null;
+    }
+
     public void loadWeb(String url) {
         if ( !(url.startsWith("http://") || url.startsWith("https://")) )
             webView.loadUrl("https://" + url);

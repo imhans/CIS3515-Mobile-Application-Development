@@ -9,9 +9,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -66,10 +68,10 @@ public class BrowserActivity extends AppCompatActivity
         if (getSupportFragmentManager().findFragmentById(R.id.page_control) == null
         && getSupportFragmentManager().findFragmentById(R.id.page_viewer ) == null) {
             pcf = new PageControlFragment();
+            pf = new PagerFragment();
             //pvf = new PageViewerFragment();
             bcf = new BrowserControlFragment();
             plf = new PageListFragment();
-            pf = new PagerFragment();
 
 
             if (flag) {
@@ -104,6 +106,22 @@ public class BrowserActivity extends AppCompatActivity
             }
         }
 
+//        Intent intent = getIntent();
+//        String action = intent.getAction();
+//        String type = intent.getType();
+//
+//        if (intent.ACTION_VIEW.equals(action) && type != null) {
+//            if ("text/plain".equals(type)) {
+//                handleView(intent);
+//                Toast.makeText(this, "gg", Toast.LENGTH_SHORT).show();
+//            }
+//        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
@@ -111,7 +129,21 @@ public class BrowserActivity extends AppCompatActivity
         if (intent.ACTION_VIEW.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
                 handleView(intent);
+                Toast.makeText(this, "gg", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    void handleView(Intent intent) {
+        String uri = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if ( uri != null ) {
+            Bundle bundle = new Bundle();
+            bundle.putString("EXTERNAL_DATA", uri);
+
+            pf.setArguments(bundle);
+//            openExternalLink(uri);
+
+            Toast.makeText(this, "uri not Null", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -119,26 +151,22 @@ public class BrowserActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_share, menu);
-        //MenuItem item = menu.findItem(R.id.action_share);
-        //mShare = (androidx.appcompat.widget.ShareActionProvider) MenuItemCompat.getActionProvider(item);
-        //setIntent("SZN");
-        //mShare.setShareHistoryFileName(null);
-        //return super.onCreateOptionsMenu(menu);
+//        MenuItem item = menu.findItem(R.id.action_share);
+//        mShare = (androidx.appcompat.widget.ShareActionProvider) MenuItemCompat.getActionProvider(item);
+//        mShare.setShareHistoryFileName(null);
+//        Intent sendIntent = new Intent();
+//        sendIntent.setAction(Intent.ACTION_SEND);
+//        sendIntent.setType("text/plain");
+//        sendIntent.putExtra(Intent.EXTRA_TEXT, "SZN");
+//        mShare.setShareIntent(sendIntent);\
         return true;
     }
 
-    void handleView(Intent intent) {
-        String uri = intent.getStringExtra(Intent.EXTRA_TEXT);
-        if (uri != null) {
-            searchClicked(uri);
-        }
-    }
     public void setIntent(String string) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.setType("text/plain");
         sendIntent.putExtra(Intent.EXTRA_TEXT, string);
-        //mShare.setShareIntent(sendIntent);
         startActivity(Intent.createChooser(sendIntent, null));
     }
 
@@ -146,11 +174,10 @@ public class BrowserActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
-                Toast.makeText(this, "gg", Toast.LENGTH_SHORT).show();
-                setIntent("SZN");
+                setIntent(pf.getURL());
                 break;
             default:
-                Toast.makeText(this, "default", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "default", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
@@ -214,6 +241,12 @@ public class BrowserActivity extends AppCompatActivity
         pcf.urlText.setText(pf.mPagerAdapter.getURL(position));
         //set title
         this.setTitle(pf.mPagerAdapter.getTitle(position));
+    }
+
+    @Override
+    public void openExternalLink(String url) {
+        //Toast.makeText(this, "ggg", Toast.LENGTH_SHORT).show();
+        pf.openPF(url);
     }
 
     @Override

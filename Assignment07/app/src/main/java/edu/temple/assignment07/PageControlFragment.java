@@ -10,15 +10,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 public class PageControlFragment extends Fragment {
     View l;
