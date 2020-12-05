@@ -110,7 +110,7 @@ public class BrowserActivity extends AppCompatActivity
 
         if (intent.ACTION_VIEW.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
-                //handleView(intent);
+                handleView(intent);
             }
         }
     }
@@ -127,6 +127,12 @@ public class BrowserActivity extends AppCompatActivity
         return true;
     }
 
+    void handleView(Intent intent) {
+        String uri = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if (uri != null) {
+            searchClicked(uri);
+        }
+    }
     public void setIntent(String string) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
