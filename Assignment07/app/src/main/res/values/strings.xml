@@ -11,6 +11,7 @@
     <string name="cancel">CANCEL</string>
     <string name="CLICKED_BOOKMARK_URL">Clicked_Bookmark_Url</string>
     <string name="share">Share</string>
+    <string name="EXTERNAL_URL">External_Url</string>
     <integer name="LAUNCH">0</integer>
 
 

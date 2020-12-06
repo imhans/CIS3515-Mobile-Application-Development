@@ -1,6 +1,7 @@
 package edu.temple.assignment07;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class PagerFragment extends Fragment {
             pvfs = (ArrayList<PageViewerFragment>) savedInstanceState.getSerializable(ARRAYLIST_PVF);
             currentPosition = savedInstanceState.getInt(CURRENT_POSITION);
         }
+
         super.onCreate(savedInstanceState);
 
     }
@@ -72,18 +74,10 @@ public class PagerFragment extends Fragment {
             pvfs.add(new PageViewerFragment());
             parentActivity.passPVFs(pvfs);
             currentPosition = 0;
-            Toast.makeText(getContext(), "savedInstanceState is null", Toast.LENGTH_LONG).show();
-
         }
         else {
             parentActivity.passPVFs(pvfs);
         }
-
-
-//        if ( this.getArguments().getString("EXTERNAL_DATA") != null ) {
-//            Toast.makeText(getContext(), "ff", Toast.LENGTH_SHORT).show();
-//            //pvfs.get(currentPosition).webView.loadUrl(getArguments().getString("EXTERNAL_DATA"));
-//        }
 
         View l = inflater.inflate(R.layout.fragment_pager, container, false);
         mPager = l.findViewById(R.id.viewpager);
@@ -110,26 +104,7 @@ public class PagerFragment extends Fragment {
 
             }
         });
-
-        Bundle a = getArguments();
-        if ( pvfs.get(0).webView == null ) {
-            String b = a.getString("EXTERNAL_DATA");
-            Toast.makeText(getContext(), "bundle not null, "+ b, Toast.LENGTH_SHORT).show();
-
-            //Log.d("pvfs: ", pvfs.get(0).webView.toString());
-        }
-
         return l;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        if ( pvfs.get(0) != null ) {
-            Toast.makeText(this.getContext(), "created", Toast.LENGTH_SHORT).show();
-            //searchPF("google.com");
-        }
     }
 
     //Add a new PVF to the ArrayList and refresh once the imageButton clicked
@@ -149,18 +124,6 @@ public class PagerFragment extends Fragment {
         } else{
                 pvfs.get(mPager.getCurrentItem()).webView.loadUrl(url);
             }
-    }
-
-    public void openPF(String url) {
-        if (pvfs.get(0).isNull() == true) {
-            Toast.makeText(this.getContext(), "webview null", Toast.LENGTH_SHORT).show();
-            pvfs.get(0).loadWeb(url);
-
-        } else {
-            Toast.makeText(this.getContext(), "webview not null", Toast.LENGTH_SHORT).show();
-            pvfs.get(0).loadWeb(url);
-        }
-
     }
 
     public void goBackPF() {
@@ -193,7 +156,6 @@ public class PagerFragment extends Fragment {
     interface PagerInterface {
         void passPVFs(ArrayList<PageViewerFragment> pvfs);
         void browserSwiped(int position);
-        void openExternalLink(String url);
     }
 
     //Custom FragmentStatePagerAdapter

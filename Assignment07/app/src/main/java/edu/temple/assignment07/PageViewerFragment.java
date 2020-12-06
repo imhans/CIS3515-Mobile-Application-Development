@@ -1,29 +1,23 @@
 package edu.temple.assignment07;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import java.io.Serializable;
-import java.net.URI;
-
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 
 public class PageViewerFragment extends Fragment implements Serializable, Parcelable {
 
@@ -75,7 +69,15 @@ public class PageViewerFragment extends Fragment implements Serializable, Parcel
 
         l = inflater.inflate(R.layout.fragment_page_viewer, container, false);
         webView = l.findViewById(R.id.webView);
-        //webView.loadUrl("https://google.com"); //To see if pvf is loaded into pf
+
+        // Load a link comes from different app
+        String url_string_id = getString(R.string.EXTERNAL_URL);
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        if ( sharedPref.contains(url_string_id)) {
+            String string_url = sharedPref.getString(url_string_id, null);
+            webView.loadUrl(string_url);
+            sharedPref.edit().remove(url_string_id).commit();
+        }
 
         if (savedInstanceState != null)
             webView.restoreState(savedInstanceState);
@@ -101,17 +103,6 @@ public class PageViewerFragment extends Fragment implements Serializable, Parcel
         return l;
     }
 
-    public boolean isNull() {
-        return webView == null;
-    }
-
-    public void loadWeb(String url) {
-        if ( !(url.startsWith("http://") || url.startsWith("https://")) )
-            webView.loadUrl("https://" + url);
-        else
-            webView.loadUrl(url);
-
-    }
     public String getTitle() {
         String title;
         if (webView != null) {

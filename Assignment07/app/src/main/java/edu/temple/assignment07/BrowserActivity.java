@@ -8,12 +8,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -31,7 +31,6 @@ public class BrowserActivity extends AppCompatActivity
     BrowserControlFragment bcf;
     PagerFragment pf;
     boolean flag;
-    androidx.appcompat.widget.ShareActionProvider mShare;
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -80,8 +79,6 @@ public class BrowserActivity extends AppCompatActivity
                         .add(R.id.page_viewer, pf)
                         .add(R.id.page_list, plf)
                         .add(R.id.browser_control, bcf)
-                        //.add(pvf, "pvf")
-                        //.addToBackStack(null)
                         .commit();
             }
             else {
@@ -90,7 +87,6 @@ public class BrowserActivity extends AppCompatActivity
                         .add(R.id.page_viewer, pf)
                         .add(R.id.browser_control, bcf)
                         .add(plf, "plf")
-                        //.add(pvf, "pvf")
                         //.addToBackStack(null)
                         .commit();
             }
@@ -106,44 +102,19 @@ public class BrowserActivity extends AppCompatActivity
             }
         }
 
-//        Intent intent = getIntent();
-//        String action = intent.getAction();
-//        String type = intent.getType();
-//
-//        if (intent.ACTION_VIEW.equals(action) && type != null) {
-//            if ("text/plain".equals(type)) {
-//                handleView(intent);
-//                Toast.makeText(this, "gg", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
+        // Manage intents sent from external application
         Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-
-        if (intent.ACTION_VIEW.equals(action) && type != null) {
-            if ("text/plain".equals(type)) {
-                handleView(intent);
-                Toast.makeText(this, "gg", Toast.LENGTH_SHORT).show();
-            }
-        }
+        handleView(intent);
     }
+
 
     void handleView(Intent intent) {
         String uri = intent.getStringExtra(Intent.EXTRA_TEXT);
         if ( uri != null ) {
-            Bundle bundle = new Bundle();
-            bundle.putString("EXTERNAL_DATA", uri);
-
-            pf.setArguments(bundle);
-//            openExternalLink(uri);
-
-            Toast.makeText(this, "uri not Null", Toast.LENGTH_SHORT).show();
+            SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.EXTERNAL_URL), uri);
+            editor.apply();
         }
     }
 
@@ -151,15 +122,8 @@ public class BrowserActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_share, menu);
-//        MenuItem item = menu.findItem(R.id.action_share);
-//        mShare = (androidx.appcompat.widget.ShareActionProvider) MenuItemCompat.getActionProvider(item);
-//        mShare.setShareHistoryFileName(null);
-//        Intent sendIntent = new Intent();
-//        sendIntent.setAction(Intent.ACTION_SEND);
-//        sendIntent.setType("text/plain");
-//        sendIntent.putExtra(Intent.EXTRA_TEXT, "SZN");
-//        mShare.setShareIntent(sendIntent);\
-        return true;
+        //return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     public void setIntent(String string) {
@@ -177,7 +141,6 @@ public class BrowserActivity extends AppCompatActivity
                 setIntent(pf.getURL());
                 break;
             default:
-                //Toast.makeText(this, "default", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
@@ -241,12 +204,6 @@ public class BrowserActivity extends AppCompatActivity
         pcf.urlText.setText(pf.mPagerAdapter.getURL(position));
         //set title
         this.setTitle(pf.mPagerAdapter.getTitle(position));
-    }
-
-    @Override
-    public void openExternalLink(String url) {
-        //Toast.makeText(this, "ggg", Toast.LENGTH_SHORT).show();
-        pf.openPF(url);
     }
 
     @Override
